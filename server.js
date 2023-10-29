@@ -25,8 +25,11 @@ const axios = require("axios");
 const cors = require("cors");
 
 const express = require("express");
+
+// Create an Express app and listen for incoming requests on port 3000
 const app = express();
 const router = express.Router();
+const port = process.env.PORT || 3000;
 
 app.use(cors());
 
@@ -168,6 +171,12 @@ router.get("/top/brani", hasAccessToken, (req, res, next) => {
   });
 });
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Internal Server Error");
+});
+
 app.use("/api", router);
 
 function hasAccessToken(req, res, next) {
@@ -205,6 +214,6 @@ function shuffle(arrParam) {
 
 const server = http.createServer(app);
 
-server.listen(8080, () => {
-  console.log("Server is listening on port 8080");
+server.listen(port, () => {
+  console.log("Server is listening on port: " + port);
 });
