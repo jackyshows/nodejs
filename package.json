@@ -1,13 +1,24 @@
 {
-  "name": "nodejs-app",
+  "name": "spotify-quiz-be",
   "version": "1.0.0",
-  "description": "A minimal Node.js web application.",
+  "description": "",
   "main": "index.js",
-  "author": "alphasec",
-  "license": "MIT",
-   "dependencies": {
-  },
   "scripts": {
-    "start": "node index.js"
+    "devStart": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "Jacopo Zimmari",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.17.1",
+    "got": "^12.5.3",
+    "node-fetch": "^3.3.0",
+    "spotify-web-api-node": "^5.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
   }
 }
