@@ -5,7 +5,7 @@ var scopes = ['user-top-read user-follow-read'],
     clientId = '51f4e4780c7749e08cd5dce2801e2041',
     state = 'some-state-of-my-choice',
     showDialog = true,
-    responseType = 'token';
+    responseType = 'code';
 
 var spotifyApi = new SpotifyWebApi({
   redirectUri: redirectUri,
@@ -183,7 +183,13 @@ function hasAccessToken(req, res, next) {
   const token = getAccessToken(req);
 
   if (token) {
-    spotifyApi.setAccessToken(token);
+    spotifyApi.clientCredentialsGrant()
+      .then(function(data) {
+        console.log('The access token is ' + data.body['access_token']);
+        spotifyApi.setAccessToken(token);
+      }, function(err) {
+        console.log('Something went wrong!', err);
+      });
     next();
   } else {
     res.send("Unauthorized! You must have a valid access_token!");
