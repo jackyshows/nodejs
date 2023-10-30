@@ -1,11 +1,11 @@
 var SpotifyWebApi = require('spotify-web-api-node');
 
 var scopes = ['user-top-read user-follow-read'],
-    redirectUri = 'https://spotifyquiz.jacopozimmari.com/home',
+    redirectUri = 'https://spotifyquiz.jacopozimmari.com/login',
     clientId = '51f4e4780c7749e08cd5dce2801e2041',
     state = 'some-state-of-my-choice',
     showDialog = true,
-    responseType = 'code';
+    responseType = 'token';
 
 var spotifyApi = new SpotifyWebApi({
   redirectUri: redirectUri,
@@ -42,6 +42,11 @@ router.get("/authorize", (req, res, next) => {
   );
 
   return res.status(200).send({ redirectUri: authorizeURL })
+});
+
+router.get("/login/:code", (req, res, next) => {
+  spotifyApi.setAccessToken(req.params['code']);
+  return res.status(200).send();
 });
 
 router.get("/domanda/:numeroDomanda", hasAccessToken, (req, res, next) => {
@@ -183,14 +188,7 @@ function hasAccessToken(req, res, next) {
   const token = getAccessToken(req);
 
   if (token) {
-    spotifyApi.clientCredentialsGrant()
-      .then(function(data) {
-        console.log('The access token is ' + data.body['access_token']);
-        spotifyApi.setAccessToken(token);
-        next();
-      }, function(err) {
-        console.log('Something went wrong!', err);
-      });
+    next();
   } else {
     res.send("Unauthorized! You must have a valid access_token!");
   }
