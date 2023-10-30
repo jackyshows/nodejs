@@ -187,10 +187,10 @@ function hasAccessToken(req, res, next) {
       .then(function(data) {
         console.log('The access token is ' + data.body['access_token']);
         spotifyApi.setAccessToken(token);
+        next();
       }, function(err) {
         console.log('Something went wrong!', err);
       });
-    next();
   } else {
     res.send("Unauthorized! You must have a valid access_token!");
   }
