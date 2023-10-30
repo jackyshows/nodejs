@@ -1,7 +1,7 @@
 var SpotifyWebApi = require('spotify-web-api-node');
 
 var scopes = ['user-top-read user-follow-read'],
-    redirectUri = 'http://localhost:4200/home',
+    redirectUri = 'https://spotifyquiz.jacopozimmari.com/home',
     clientId = '51f4e4780c7749e08cd5dce2801e2041',
     state = 'some-state-of-my-choice',
     showDialog = true,
